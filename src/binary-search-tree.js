@@ -9,15 +9,16 @@ const { Node } = require('../extensions/list-tree.js');
 class BinarySearchTree {
 
   constructor() {
-    this.root = null;
+    this.head = null;
   }
 
   root() {
-    return this.root;
+    return this.head;
   }
 
+
   add(data) {
-    this.root = addIn(this.root, data);
+    this.head = addIn(this.head, data);
 
     function addIn(node, data) {
       if (!node) {
@@ -37,7 +38,7 @@ class BinarySearchTree {
   }
 
   has(data) {
-    return hasIn(this.root, data);
+    return hasIn(this.head, data);
 
     function hasIn(node, data) {
       if (!node) {
@@ -52,13 +53,19 @@ class BinarySearchTree {
     }
   }
 
-  find(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+  
+
+  find(value, treeTop = this.head) {
+    if (!treeTop) return null;
+    const { data, right, left } = treeTop;
+    if (value === data) return treeTop;
+    return value > data ?
+        this.find(value, right) :
+        this.find(value, left);
+}
 
   remove(data) {
-    this.root = removeNode(this.root, data);
+    this.head = removeNode(this.head, data);
 
     function removeNode(node, data) {
       if (!node) {
@@ -99,11 +106,11 @@ class BinarySearchTree {
   }
 
   min() {
-    if (!this.root) {
+    if (!this.head) {
       return;
     }
 
-    let node = this.root;
+    let node = this.head;
     while (node.left) {
       node = node.left;
     }
@@ -111,11 +118,11 @@ class BinarySearchTree {
   }
 
   max() {
-    if (!this.root) {
+    if (!this.head) {
       return;
     }
 
-    let node = this.root;
+    let node = this.head;
     while (node.right) {
       node = node.right;
     }
